@@ -2,7 +2,10 @@ var img = document.createElement("img");
 var img2 = document.createElement("img");
 const nomResto = document.querySelectorAll('.nomR');
 const descritCuisine = document.querySelectorAll('.descriptR');
-const images = document.querySelectorAll('.img')
+const images = document.querySelectorAll('.img');
+const xhr = new XMLHttpRequest();
+const url = 'https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/restaurants-casvp/records?limit=20';
+xhr.open('GET', url, true);
 img.src = "images/img1.jpg";
 img2.src = "images/img2.jpg"
 const restaurants = [
@@ -22,8 +25,8 @@ const restaurants = [
         image: "images/img3.jpg"
     },
     {
-        nom: "Restaurant Les freres",
-        typeCuisine: "Cuisine Africaine",
+        nom: "Restaurant Mon genie",
+        typeCuisine: "Cuisine Thailandaise",
         image: "images/img4.jpg"
     }
 ]
@@ -39,3 +42,14 @@ for (let i = 0; i < restaurants.length; i++) {
 
 // var div2 = document.getElementById("y");
 // console.log(div2.appendChild(img2));
+
+xhr.onload = function () {
+    if (xhr.status === 200) {
+        const data = JSON.parse(xhr.responseText);
+        console.log(data);
+    } else {
+        console.error('Erreur lors de la récupération des données.');
+    }
+};
+
+xhr.send();
